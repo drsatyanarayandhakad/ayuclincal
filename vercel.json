@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm run build",
+  "nodeVersion": "22.x",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "server/_core/index.ts": {
+      "runtime": "nodejs22.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/trpc(.*)",
+      "dest": "server/_core/index.ts",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
+    },
+    {
+      "src": "/auth(.*)",
+      "dest": "server/_core/index.ts",
+      "methods": ["GET", "POST"]
+    },
+    {
+      "src": "/healthz",
+      "dest": "server/_core/index.ts"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "server/_core/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "dist/public/index.html"
+    }
+  ]
+}
